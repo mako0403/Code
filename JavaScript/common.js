@@ -376,57 +376,6 @@ function overLength(obj,leng){
 	};
 })(jQuery);
 
-//DUB 测试工具 打印对象
-var alertObj=function(JSON){
-	JSON = JSON||{};
-	if(!!JSON.obj===false){
-		JSON = {obj:JSON};
-	}
-	var aObj = JSON.obj||{};//打印对象
-	var key  = JSON.key ||"";//属性名称过滤条件
-	var tab  =JSON.tab ||"";//制表位
-	var title =JSON.title ||"对象属性";//题目
-	var showFun  = JSON.showFun || false;//是否显示方法体内容 默认为false
-	
-	//TODO 属性排序
-	var propertys = [];
-	for(var o in aObj){
-		//没有属性过滤条件，或者属性包含过滤条件。
-		if(!!key===false || (!!key===true && (o+"").toLowerCase().indexOf(key)>=0) ){
-			propertys.push(o);
-		}
-	}
-	propertys.sort();
-	var len = propertys.length;
-	var index = 1;
-	var max =20;//每次最多打印max个属性(受alert可显示空间限制)
-	var v = title+":"; 
-	for(var i in propertys){
-		var o = propertys[i];
-		if(typeof(aObj[o])!=="object" && typeof(aObj[o])!=="function" ){
-			v+=(tab+"-"+o+"："+aObj[o]+"");			
-		}else if(typeof(aObj[o])=="function"){
-			if(showFun!=true){
-				v+=(tab+"+"+o+"：[function]");
-			}else{
-				v+=(tab+"+"+o+"："+aObj[o]+"");
-			}
-		}else{
-			v+=(tab+"+"+o+"：[object]");
-		}
-		if(index++%max==0){
-			alert(v);
-			//第二次打印将会追加编号
-			v = title+Math.ceil(index/max)+":"; ;//置空，从新累加
-		}
-	}
-	if(len%max!=0){//打印最后一次
-		alert(v);
-	}
-	
-	//alert("len = "+len+",max  ="+max+","+len%max);
-}
-
 //计算两个坐标之间的距离，返回单位为米的数值
 function beelineDistance(lat1, lng1, lat2, lng2){
 	//d * Math.PI / 180.0; 计算弧度
